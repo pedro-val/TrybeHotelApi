@@ -9,7 +9,7 @@ public class TrybeHotelContext : DbContext, ITrybeHotelContext
     }
     public DbSet<City>? Cities { get; set; }
     public DbSet<Hotel>? Hotels { get; set; }
-    public DbSet<Room>? Rooms { get; set; } // Removed the nullability operator
+    public DbSet<Room>? Rooms { get; set; } 
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
