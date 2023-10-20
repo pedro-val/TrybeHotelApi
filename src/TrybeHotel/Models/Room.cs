@@ -13,11 +13,9 @@ public class Room {
     public int HotelId { get; set; }
     public Hotel? Hotel { get; set; }
 
-    public Room(string name, int capacity, string image, int hotelId) {
-        Name = name;
-        Capacity = capacity;
-        Image = image;
-        HotelId = hotelId;
-        Hotel = null;
+    public Room() {
+        Name = "";
+        Capacity = 0;
+        Image = "";
     }
 }
