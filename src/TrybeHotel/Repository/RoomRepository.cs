@@ -34,14 +34,35 @@ public IEnumerable<RoomDto> GetRooms(int HotelId)
     return roomsDto;
 }
 
-        // 7. Desenvolva o endpoint POST /room
-        public RoomDto AddRoom(Room room) {
-            throw new NotImplementedException(); 
-        }
+            // 7. Desenvolva o endpoint POST /room
+    public RoomDto AddRoom(Room room) {
+        _context.Rooms.Add(room);
+        _context.SaveChanges();
+        var roomToReturn = _context.Rooms
+            .Include(r => r.Hotel)
+            .FirstOrDefault(r => r.RoomId == room.RoomId);
+        return new RoomDto {
+            RoomId = roomToReturn?.RoomId ?? 0,
+            Name = roomToReturn?.Name,
+            Capacity = roomToReturn?.Capacity ?? 0,
+            Image = roomToReturn?.Image,
+            Hotel = roomToReturn?.Hotel == null ? null : new HotelDto {
+                HotelId = roomToReturn.Hotel.HotelId,
+                Name = roomToReturn.Hotel.Name,
+                Address = roomToReturn.Hotel.Address,
+                CityId = roomToReturn.Hotel.CityId,
+                CityName = roomToReturn.Hotel.City == null ? null : roomToReturn.Hotel.City.Name
+            }
+        };
+    }
 
         // 8. Desenvolva o endpoint DELETE /room/:roomId
         public void DeleteRoom(int RoomId) {
-            throw new NotImplementedException();
+            var room = _context.Rooms.FirstOrDefault(r => r.RoomId == RoomId);
+            if (room != null) {
+                _context.Rooms.Remove(room);
+                _context.SaveChanges();
+            }
         }
     }
 }
