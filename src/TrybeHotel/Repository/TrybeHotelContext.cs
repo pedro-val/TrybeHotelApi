@@ -4,11 +4,12 @@ using TrybeHotel.Models;
 namespace TrybeHotel.Repository;
 public class TrybeHotelContext : DbContext, ITrybeHotelContext
 {
-    public TrybeHotelContext(DbContextOptions<TrybeHotelContext> options) : base(options) 
+    public TrybeHotelContext(DbContextOptions<TrybeHotelContext> options) : base(options)
     { 
-        Cities = Set<City>();
-        Hotels = Set<Hotel>();
-        Rooms = Set<Room>();
+    }
+
+    public TrybeHotelContext()
+    {
     }
     public DbSet<City> Cities { get; set; }
     public DbSet<Hotel> Hotels { get; set; }
