@@ -21,7 +21,29 @@ namespace TrybeHotel.Repository
         }
         public UserDto Add(UserDtoInsert user)
         {
-            throw new NotImplementedException(); 
+            if (_context.Users.Any(u => u.Email == user.Email))
+            {
+                throw new ArgumentException("Email already exists");
+            }
+
+            var toAddUser = new User
+            {
+                Name = user.Name,
+                Email = user.Email,
+                Password = user.Password,
+                UserType = "client"
+            };
+
+            _context.Users.Add(toAddUser);
+            _context.SaveChanges();
+
+            return new UserDto
+            {
+                UserId = toAddUser.UserId,
+                Name = toAddUser.Name,
+                Email = toAddUser.Email,
+                UserType = toAddUser.UserType
+            };
         }
 
         public UserDto GetUserByEmail(string userEmail)
