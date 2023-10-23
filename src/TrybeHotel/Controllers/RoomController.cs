@@ -24,8 +24,10 @@ namespace TrybeHotel.Controllers
         [HttpPost]
         public IActionResult PostRoom([FromBody] Room room){
             var roomDto = _repository.AddRoom(room);
-            var response = new ObjectResult(roomDto);
-            response.StatusCode = 201;
+            var response = new ObjectResult(roomDto)
+            {
+                StatusCode = 201
+            };
             return response;
         }
 

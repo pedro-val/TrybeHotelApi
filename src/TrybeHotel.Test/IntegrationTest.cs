@@ -10,8 +10,9 @@ using System.Text.Json;
 using System.Diagnostics;
 using System.Xml;
 using System.IO;
-
-
+using System.Text;
+using TrybeHotel.Dto;
+using System.Net;
 
 public class IntegrationTest: IClassFixture<WebApplicationFactory<Program>>
 {
@@ -74,5 +75,57 @@ public class IntegrationTest: IClassFixture<WebApplicationFactory<Program>>
         var response = await _clientTest.GetAsync(url);
         Assert.Equal(System.Net.HttpStatusCode.OK, response?.StatusCode);
     }
+    [Fact]
+    public async Task TestPostRoom()
+    {
+        // Arrange
+        var inputObj = new {
+            Name = "Suite básica",
+            Capacity = 8,
+            Image = "Image suite",
+            HotelId = 3
+        };
+        var content = new StringContent(JsonConvert.SerializeObject(inputObj), Encoding.UTF8, "application/json");
+
+        // Act
+        var response = await _clientTest.PostAsync("/room", content);
+        var responseString = await response.Content.ReadAsStringAsync();
+        var roomDto = JsonConvert.DeserializeObject<RoomDto>(responseString);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        Assert.Equal("Suite básica", roomDto?.Name);
+        Assert.Equal(8, roomDto?.Capacity);
+        Assert.Equal("Image suite", roomDto?.Image);
+        Assert.NotNull(roomDto?.Hotel);
+        Assert.Equal(3, roomDto?.Hotel?.HotelId);
+        Assert.Equal("Trybe Hotel Ponta Negra", roomDto?.Hotel?.Name);
+        Assert.Equal("Manaus", roomDto?.Hotel?.CityName);
+    }
+    public async Task TestGetHotel()
+    {
+    // Arrange
+    var expectedHotel = new HotelDto {
+        HotelId = 1,
+        Name = "Trybe Hotel SP",
+        Address = "Avenida Paulista, 1400",
+        CityId = 1,
+        CityName = "São Paulo"
+    };
+
+    // Act
+    var response = await _clientTest.GetAsync("/hotel/1");
+    var responseString = await response.Content.ReadAsStringAsync();
+    var hotelDto = JsonConvert.DeserializeObject<HotelDto>(responseString);
+
+    // Assert
+    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    Assert.Equal(expectedHotel.HotelId, hotelDto?.HotelId);
+    Assert.Equal(expectedHotel.Name, hotelDto?.Name);
+    Assert.Equal(expectedHotel.Address, hotelDto?.Address);
+    Assert.Equal(expectedHotel.CityId, hotelDto?.CityId);
+    Assert.Equal(expectedHotel.CityName, hotelDto?.CityName);
+    }
+    
 
 }
