@@ -35,32 +35,15 @@ namespace TrybeHotel.Repository
     }
 
             // 7. Desenvolva o endpoint POST /room
-    // public RoomDto AddRoom(Room room) {
-    //     _context.Rooms.Add(room);
-    //     _context.SaveChanges();
-    //     var roomToReturn = _context.Rooms
-    //         .Include(r => r.Hotel)
-    //         .FirstOrDefault(r => r.RoomId == room.RoomId);
-    //     return new RoomDto {
-    //         RoomId = roomToReturn?.RoomId ?? 0,
-    //         Name = roomToReturn?.Name,
-    //         Capacity = roomToReturn?.Capacity ?? 0,
-    //         Image = roomToReturn?.Image,
-    //         Hotel = roomToReturn?.Hotel == null ? null : new HotelDto {
-    //             HotelId = roomToReturn.Hotel.HotelId,
-    //             Name = roomToReturn.Hotel.Name,
-    //             Address = roomToReturn.Hotel.Address,
-    //             CityId = roomToReturn.Hotel.CityId,
-    //             CityName = roomToReturn.Hotel.City?.Name
-    //         }
-    //     };
-    // }
     public RoomDto AddRoom(Room room) {
         _context.Rooms.Add(room);
         _context.SaveChanges();
         var roomToReturn = _context.Rooms
             .Include(r => r.Hotel)
             .FirstOrDefault(r => r.RoomId == room.RoomId);
+        var hotelToReturn = _context.Hotels
+            .Include(h => h.City)
+            .FirstOrDefault(h => h.HotelId == room.HotelId);    
         return new RoomDto {
             RoomId = roomToReturn?.RoomId ?? 0,
             Name = roomToReturn?.Name,
@@ -71,7 +54,7 @@ namespace TrybeHotel.Repository
                 Name = roomToReturn.Hotel.Name,
                 Address = roomToReturn.Hotel.Address,
                 CityId = roomToReturn.Hotel.CityId,
-                CityName = roomToReturn.Hotel.City == null ? null : roomToReturn.Hotel.City.Name
+                CityName = hotelToReturn?.City == null ? null : hotelToReturn.City.Name
             }
         };
     }
