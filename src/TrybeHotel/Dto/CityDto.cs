@@ -5,9 +5,5 @@ namespace TrybeHotel.Dto
         public int CityId { get; set; }
         public string? Name { get; set; }
 
-        // public CityDto(City city) {
-        //     Id = city.CityId;
-        //     Nome = city.Name;
-        // }
     }
 }
