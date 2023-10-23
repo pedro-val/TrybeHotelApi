@@ -12,6 +12,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddAuthentication( options => {
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    
+}).AddJwtBearer( options => {
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = false,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("4d82a63bbdc67c1e4784ed6587f3730c"))
+    };
+});
 builder.Services.AddDbContext<TrybeHotelContext>();
 builder.Services.AddScoped<ITrybeHotelContext, TrybeHotelContext>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();

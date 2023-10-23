@@ -21,7 +21,15 @@ namespace TrybeHotel.Services
         }
         public string Generate(UserDto user)
         {
-            throw new NotImplementedException();
+        var tokenHandler = new JwtSecurityTokenHandler();
+        SecurityTokenDescriptor tokenDescriptor = new();
+        tokenDescriptor.SigningCredentials = new SigningCredentials(
+            new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_tokenOptions.Secret ?? string.Empty)),
+            SecurityAlgorithms.HmacSha256Signature);
+
+        tokenDescriptor.Expires = DateTime.UtcNow.AddYears(_tokenOptions.ExpiresDay);
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
         }
 
         private ClaimsIdentity AddClaims(UserDto user)
