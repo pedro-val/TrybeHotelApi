@@ -19,11 +19,12 @@ namespace TrybeHotel.Repository
         {
            throw new NotImplementedException();
         }
+
         public UserDto Add(UserDtoInsert user)
         {
             if (_context.Users.Any(u => u.Email == user.Email))
             {
-                throw new ArgumentException("Email already exists");
+                throw new ArgumentException("User email already exists");
             }
 
             var toAddUser = new User
@@ -36,13 +37,18 @@ namespace TrybeHotel.Repository
 
             _context.Users.Add(toAddUser);
             _context.SaveChanges();
-
+            
+            var savedUser = _context.Users.FirstOrDefault(u => u.Email == user.Email);
+            if (savedUser == null)
+            {
+                throw new ArgumentException("Error saving user");
+            }
             return new UserDto
             {
-                UserId = toAddUser.UserId,
-                Name = toAddUser.Name,
-                Email = toAddUser.Email,
-                UserType = toAddUser.UserType
+                UserId = savedUser.UserId,
+                Name = savedUser.Name,
+                Email = savedUser.Email,
+                UserType = savedUser.UserType
             };
         }
 

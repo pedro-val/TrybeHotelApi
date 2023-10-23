@@ -26,31 +26,15 @@ namespace TrybeHotel.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] UserDtoInsert user)
         {
-                        try
+            try
             {
-                var addUser = new User
-                {
-                    Name = user.Name,
-                    Email = user.Email,
-                    Password = user.Password,
-                    UserType = "client"
-                };
-
                 var addedUser = _repository.Add(user);
-
-                var userDtoResponse = new UserDto
-                {
-                    UserId = addedUser.UserId,
-                    Name = addedUser.Name,
-                    Email = addedUser.Email,
-                    UserType = addedUser.UserType
-                };
-
-                return CreatedAtAction(nameof(GetUsers), userDtoResponse);
+                //quero retornar status 201
+                return CreatedAtAction(nameof(GetUsers), addedUser);
             }
             catch (ArgumentException e)
             {
-                return Conflict(e.Message);
+                return Conflict(new { message = e.Message });
             }
         }
     }
