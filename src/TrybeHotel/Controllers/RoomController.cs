@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TrybeHotel.Models;
 using TrybeHotel.Repository;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace TrybeHotel.Controllers
 {
@@ -17,20 +14,29 @@ namespace TrybeHotel.Controllers
             _repository = repository;
         }
 
+        // 6. Desenvolva o endpoint GET /room/:hotelId
         [HttpGet("{HotelId}")]
         public IActionResult GetRoom(int HotelId){
-            throw new NotImplementedException();
+            return Ok(_repository.GetRooms(HotelId));
         }
 
+        // 7. Desenvolva o endpoint POST /room
         [HttpPost]
         public IActionResult PostRoom([FromBody] Room room){
-            throw new NotImplementedException();
+            var roomDto = _repository.AddRoom(room);
+            var response = new ObjectResult(roomDto)
+            {
+                StatusCode = 201
+            };
+            return response;
         }
 
+        // 8. Desenvolva o endpoint DELETE /room/:roomId
         [HttpDelete("{RoomId}")]
         public IActionResult Delete(int RoomId)
         {
-            throw new NotImplementedException();
+            _repository.DeleteRoom(RoomId);
+            return NoContent();
         }
     }
 }
