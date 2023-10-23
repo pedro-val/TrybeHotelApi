@@ -246,9 +246,9 @@
               "resultFile": {
                 "uri": "file:///home/pedro/trybe/Projetos/c%23/csharp-028-csharp-projeto-trybe-hotel-fase-b/src/TrybeHotel/Program.cs",
                 "region": {
-                  "startLine": 97,
+                  "startLine": 83,
                   "startColumn": 22,
-                  "endLine": 97,
+                  "endLine": 83,
                   "endColumn": 29
                 }
               }
