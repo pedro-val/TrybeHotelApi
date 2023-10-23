@@ -29,7 +29,6 @@ namespace TrybeHotel.Controllers
             try
             {
                 var addedUser = _repository.Add(user);
-                //quero retornar status 201
                 return CreatedAtAction(nameof(GetUsers), addedUser);
             }
             catch (ArgumentException e)

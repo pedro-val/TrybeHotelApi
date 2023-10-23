@@ -12,7 +12,7 @@ using TrybeHotel.Repository;
 namespace TrybeHotel.Migrations
 {
     [DbContext(typeof(TrybeHotelContext))]
-    [Migration("20231023170611_firstMigration")]
+    [Migration("20231023201802_firstMigration")]
     partial class firstMigration
     {
         /// <inheritdoc />
@@ -152,7 +152,7 @@ namespace TrybeHotel.Migrations
             modelBuilder.Entity("TrybeHotel.Models.Booking", b =>
                 {
                     b.HasOne("TrybeHotel.Models.Room", "Room")
-                        .WithMany()
+                        .WithMany("Bookings")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -198,6 +198,11 @@ namespace TrybeHotel.Migrations
             modelBuilder.Entity("TrybeHotel.Models.Hotel", b =>
                 {
                     b.Navigation("Rooms");
+                });
+
+            modelBuilder.Entity("TrybeHotel.Models.Room", b =>
+                {
+                    b.Navigation("Bookings");
                 });
 
             modelBuilder.Entity("TrybeHotel.Models.User", b =>

@@ -238,6 +238,27 @@
           }
         },
         {
+          "ruleId": "CS8604",
+          "level": "warning",
+          "message": "Possível argumento de referência nula para o parâmetro 'value' em 'Claim.Claim(string type, string value)'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///home/pedro/trybe/Projetos/c%23/csharp-028-csharp-projeto-trybe-hotel-fase-b/src/TrybeHotel/Services/TokenGenerator.cs",
+                "region": {
+                  "startLine": 48,
+                  "startColumn": 54,
+                  "endLine": 48,
+                  "endColumn": 64
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
           "ruleId": "CA1050",
           "level": "note",
           "message": "Declare types in namespaces",
@@ -246,9 +267,9 @@
               "resultFile": {
                 "uri": "file:///home/pedro/trybe/Projetos/c%23/csharp-028-csharp-projeto-trybe-hotel-fase-b/src/TrybeHotel/Program.cs",
                 "region": {
-                  "startLine": 83,
+                  "startLine": 97,
                   "startColumn": 22,
-                  "endLine": 83,
+                  "endLine": 97,
                   "endColumn": 29
                 }
               }
@@ -294,6 +315,20 @@
           "shortDescription": "Não é possível criar uma instância do analisador",
           "defaultLevel": "warning",
           "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8032)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS8604": {
+          "id": "CS8604",
+          "shortDescription": "Possível argumento de referência nula.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8604)",
           "properties": {
             "category": "Compiler",
             "isEnabledByDefault": true,
