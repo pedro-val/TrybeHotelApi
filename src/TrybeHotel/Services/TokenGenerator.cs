@@ -45,7 +45,7 @@ namespace TrybeHotel.Services
                 Claim roleClaim = new(ClaimTypes.Role, user.UserType);
                 claims.AddClaim(roleClaim);
             }
-            Claim emailClaim = new(ClaimTypes.Email, user.Email ?? string.Empty);
+            Claim emailClaim = new(ClaimTypes.Email, user.Email);
             claims.AddClaim(emailClaim);
             return claims;
         }

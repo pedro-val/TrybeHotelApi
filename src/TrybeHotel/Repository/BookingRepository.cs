@@ -14,11 +14,7 @@ namespace TrybeHotel.Repository
 
         public BookingResponse Add(BookingDtoInsert booking, string email)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Email == email);
-            if (user == null)
-            {
-                throw new ArgumentException("User not found");
-            }
+            var user = _context.Users.FirstOrDefault(u => u.Email == email) ?? throw new ArgumentException("User not found");
             var room = _context.Rooms
                 .Include(r => r.Hotel)
                 .FirstOrDefault(r => r.RoomId == booking.RoomId);
@@ -49,23 +45,14 @@ namespace TrybeHotel.Repository
                 .Include(r => r.Hotel)
                 .FirstOrDefault(r => r.RoomId == booking.RoomId)
                 })
-                .FirstOrDefault(b => b.BookingId == bookingToAdd.BookingId);
-            if (bookingResponse == null)
-            {
-                throw new ArgumentException("Booking not found");
-            }
+                .FirstOrDefault(b => b.BookingId == bookingToAdd.BookingId) ?? throw new ArgumentException("Booking not found");
             return bookingResponse;
-        }
-
-        private BookingResponse BadRequest(object value)
-        {
-            throw new NotImplementedException();
         }
 
         public BookingResponse GetBooking(int bookingId, string email)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Email == email) ?? throw new ArgumentException("User not found");
             var bookingResponse = _context.Bookings
+                .Where(b => b.User.Email == email)
                 .Include(b => b.Room)
                 .ThenInclude(r => r.Hotel)
                 .Select(b => new BookingResponse
@@ -84,7 +71,14 @@ namespace TrybeHotel.Repository
 
         public Room GetRoomById(int RoomId)
         {
-            throw new NotImplementedException();
+            var room = _context.Rooms
+                .Include(r => r.Hotel)
+                .FirstOrDefault(r => r.RoomId == RoomId);
+            if (room == null)
+            {
+                throw new ArgumentException("Room not found");
+            }
+            return room;
         }
 
     }

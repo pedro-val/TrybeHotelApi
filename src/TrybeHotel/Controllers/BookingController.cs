@@ -21,6 +21,7 @@ namespace TrybeHotel.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Authorize(Policy = "Client")]
         public IActionResult Add([FromBody] BookingDtoInsert bookingInsert)
         {
@@ -38,16 +39,18 @@ namespace TrybeHotel.Controllers
 
 
         [HttpGet("{Bookingid}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Authorize(Policy = "Client")]
         public IActionResult GetBooking(int Bookingid)
         {
             try
             {
-                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-                var bookingResponse = _repository.GetBooking(Bookingid, userEmail ?? string.Empty);
+                var token = HttpContext.User.Identity as ClaimsIdentity;
+                var email = token?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+                var bookingResponse = _repository.GetBooking(Bookingid, email ?? string.Empty);
                 return Ok(bookingResponse);
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
                 return Unauthorized();
             }
