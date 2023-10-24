@@ -19,8 +19,19 @@ namespace TrybeHotel.Controllers
         }
         
         [HttpGet]
+        [Authorize(Policy = "Admin")]
         public IActionResult GetUsers(){
-            throw new NotImplementedException();
+            try
+            {
+                var users = _repository.GetUsers();
+                return Ok(users);
+                
+            }
+            catch (System.Exception e)
+            {
+                //object status deve ser 401
+                return Unauthorized(new { message = e.Message });
+            }
         }
 
         [HttpPost]
