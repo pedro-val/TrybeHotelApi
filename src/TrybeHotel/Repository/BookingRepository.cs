@@ -24,8 +24,8 @@ namespace TrybeHotel.Repository
             }
             var bookingToAdd = new Booking
             {
-                CheckIn = booking.CheckIn,
-                CheckOut = booking.CheckOut,
+                CheckIn = DateTime.Parse(booking.CheckIn),
+                CheckOut = DateTime.Parse(booking.CheckOut),
                 GuestQuant = booking.GuestQuant,
                 RoomId = booking.RoomId,
                 UserId = user.UserId
@@ -51,6 +51,7 @@ namespace TrybeHotel.Repository
 
         public BookingResponse GetBooking(int bookingId, string email)
         {
+
             var bookingResponse = _context.Bookings
                 .Where(b => b.User.Email == email)
                 .Include(b => b.Room)

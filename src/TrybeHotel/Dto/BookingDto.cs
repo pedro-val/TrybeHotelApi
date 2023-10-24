@@ -1,12 +1,17 @@
+using System.ComponentModel.DataAnnotations;
 using TrybeHotel.Models;
 
 namespace TrybeHotel.Dto
 {
     public class BookingDtoInsert
     {
-        public DateTime CheckIn { get; set; }
-        public DateTime CheckOut { get; set; }
+        [Required]
+        public string CheckIn { get; set; }
+        [Required]
+        public string CheckOut { get; set; }
+        [Required]
         public int GuestQuant { get; set; }
+        [Required]
         public int RoomId { get; set; }
     }
 

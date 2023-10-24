@@ -27,9 +27,10 @@ namespace TrybeHotel.Controllers
         {
             try
             {
-                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-                var bookingResponse = _repository.Add(bookingInsert, userEmail ?? string.Empty);
-                return CreatedAtAction(nameof(GetBooking), new { id = bookingResponse.BookingId }, bookingResponse);                
+                var token = HttpContext.User.Identity as ClaimsIdentity;
+                var email = token?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+                var bookingResponse = _repository.Add(bookingInsert, email);
+                return Created("", bookingResponse);                
             }
             catch (ArgumentException e)
             {

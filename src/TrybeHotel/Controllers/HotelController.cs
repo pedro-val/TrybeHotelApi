@@ -30,9 +30,7 @@ namespace TrybeHotel.Controllers
         [Authorize(Policy = "Admin")]
         public IActionResult PostHotel([FromBody] Hotel hotel){
             var hotelDto = _repository.AddHotel(hotel);
-            var response = new ObjectResult(hotelDto);
-            response.StatusCode = 201;
-            return response;
+            return Created("", hotelDto);
         }
     }
 }

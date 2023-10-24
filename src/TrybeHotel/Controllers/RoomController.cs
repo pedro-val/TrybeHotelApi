@@ -28,11 +28,7 @@ namespace TrybeHotel.Controllers
         [Authorize(Policy = "Admin")]
         public IActionResult PostRoom([FromBody] Room room){
             var roomDto = _repository.AddRoom(room);
-            var response = new ObjectResult(roomDto)
-            {
-                StatusCode = 201
-            };
-            return response;
+            return Created("", roomDto);
         }
 
         // 8. Desenvolva o endpoint DELETE /room/:roomId
