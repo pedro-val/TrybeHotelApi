@@ -9,6 +9,7 @@ namespace TrybeHotel.Models
 
         public int CityId { get; set; }
         public string? Name { get; set; }
+        public string? State { get; set; }
         public virtual List<Hotel>? Hotels { get; set; }
 
     }
