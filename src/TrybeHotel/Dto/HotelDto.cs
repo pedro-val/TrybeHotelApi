@@ -6,6 +6,7 @@ namespace TrybeHotel.Dto {
             public string? Image { get; set; }
             public int CityId { get; set; }
             public string? CityName { get; set; }
+            public string? State { get; set; }
 
     }
 }
