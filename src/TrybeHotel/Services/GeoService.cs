@@ -6,16 +6,30 @@ namespace TrybeHotel.Services
 {
     public class GeoService : IGeoService
     {
-         private readonly HttpClient _client;
-        public GeoService(HttpClient client)
+        private readonly HttpClient _client;
+
+        public GeoService(HttpClient httpClient)
         {
-            _client = client;
+            _client = httpClient;
         }
 
         // 11. Desenvolva o endpoint GET /geo/status
         public async Task<object> GetGeoStatus()
         {
-            throw new NotImplementedException();
+            
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://nominatim.openstreetmap.org/status.php?format=json");
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("User-Agent", "aspnet-user-agent");
+            var response = await _client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return content;
+            }
+            else
+            {
+                throw new HttpRequestException();
+            }
         }
         
         // 12. Desenvolva o endpoint GET /geo/address

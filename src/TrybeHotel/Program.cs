@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<TrybeHotelContext>();
+builder.Services.AddHttpClient();
 builder.Services.AddScoped<ITrybeHotelContext, TrybeHotelContext>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
