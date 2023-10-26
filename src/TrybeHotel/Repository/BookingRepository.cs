@@ -41,11 +41,25 @@ namespace TrybeHotel.Repository
                     CheckIn = b.CheckIn,
                     CheckOut = b.CheckOut,
                     GuestQuant = b.GuestQuant,
-                    Room = _context.Rooms
-                .Include(r => r.Hotel)
-                .FirstOrDefault(r => r.RoomId == booking.RoomId)
-                })
-                .FirstOrDefault(b => b.BookingId == bookingToAdd.BookingId) ?? throw new ArgumentException("Booking not found");
+                    Room = new RoomDto {
+                        RoomId = b.Room.RoomId,
+                        Name = b.Room.Name,
+                        Capacity = b.Room.Capacity,
+                        Image = b.Room.Image,
+                        Hotel = new HotelDto {
+                            HotelId = b.Room.Hotel.HotelId,
+                            Name = b.Room.Hotel.Name,
+                            Address = b.Room.Hotel.Address,
+                            CityId = b.Room.Hotel.City.CityId,
+                            CityName = b.Room.Hotel.City.Name,
+                            State = b.Room.Hotel.City.State
+                        }
+                    }
+                }).FirstOrDefault(b => b.BookingId == bookingToAdd.BookingId) ?? throw new ArgumentException("Booking not found");
+                // .Include(r => r.Hotel)
+                // .FirstOrDefault(r => r.RoomId == booking.RoomId)
+                // })
+                // .FirstOrDefault(b => b.BookingId == bookingToAdd.BookingId) ?? throw new ArgumentException("Booking not found");
             return bookingResponse;
         }
 
@@ -62,9 +76,20 @@ namespace TrybeHotel.Repository
                     CheckIn = b.CheckIn,
                     CheckOut = b.CheckOut,
                     GuestQuant = b.GuestQuant,
-                    Room = _context.Rooms
-                .Include(r => r.Hotel)
-                .FirstOrDefault(r => r.RoomId == b.RoomId)
+                    Room = new RoomDto {
+                        RoomId = b.Room.RoomId,
+                        Name = b.Room.Name,
+                        Capacity = b.Room.Capacity,
+                        Image = b.Room.Image,
+                        Hotel = new HotelDto {
+                            HotelId = b.Room.Hotel.HotelId,
+                            Name = b.Room.Hotel.Name,
+                            Address = b.Room.Hotel.Address,
+                            CityId = b.Room.Hotel.City.CityId,
+                            CityName = b.Room.Hotel.City.Name,
+                            State = b.Room.Hotel.City.State
+                        }
+                    }
                 })
                 .FirstOrDefault(b => b.BookingId == bookingId);
             return bookingResponse ?? throw new ArgumentException("Booking not found");
