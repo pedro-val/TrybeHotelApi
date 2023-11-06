@@ -14,9 +14,4 @@ public class Hotel {
     public int CityId { get; set; }
     public City? City { get; set; }
 
-    // public Hotel() {
-    //     Name = "";
-    //     Address = "";
-    //     Rooms = new List<Room>();
-    // }
 }

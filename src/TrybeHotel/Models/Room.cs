@@ -13,9 +13,4 @@ public class Room {
     public int HotelId { get; set; }
     public Hotel? Hotel { get; set; }
 
-    // public Room() {
-    //     Name = "";
-    //     Capacity = 0;
-    //     Image = "";
-    // }
 }
