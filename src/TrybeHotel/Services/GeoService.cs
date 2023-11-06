@@ -1,4 +1,4 @@
-using System.Net.Http;
+using Microsoft.AspNetCore.DataProtection.KeyManagement.Internal;
 using TrybeHotel.Dto;
 using TrybeHotel.Repository;
 
@@ -6,28 +6,83 @@ namespace TrybeHotel.Services
 {
     public class GeoService : IGeoService
     {
-         private readonly HttpClient _client;
-        public GeoService(HttpClient client)
+        private readonly HttpClient _client;
+
+        public GeoService(HttpClient httpClient)
         {
-            _client = client;
+            _client = httpClient;
         }
 
         // 11. Desenvolva o endpoint GET /geo/status
         public async Task<object> GetGeoStatus()
         {
-            throw new NotImplementedException();
+            
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://nominatim.openstreetmap.org/status.php?format=json");
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("User-Agent", "aspnet-user-agent");
+            var response = await _client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return content;
+            }
+            else
+            {
+                throw new HttpRequestException();
+            }
         }
         
         // 12. Desenvolva o endpoint GET /geo/address
         public async Task<GeoDtoResponse> GetGeoLocation(GeoDto geoDto)
         {
-            throw new NotImplementedException();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"hhttps://nominatim.openstreetmap.org/search?street={geoDto.Address}&city={geoDto.City}&country=Brazil&state={geoDto.State}&format=json&limit=1");
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("User-Agent", "aspnet-user-agent");
+            var response = await _client.SendAsync(request);
+            Console.WriteLine(response.IsSuccessStatusCode);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var result = System.Text.Json.JsonSerializer.Deserialize<GeoDtoResponse>(content);
+                return new GeoDtoResponse {
+                    lat = result?.lat,
+                    lon = result?.lon
+                };
+            }
+            else
+            {
+                return default(GeoDtoResponse);
+            }
         }
 
         // 12. Desenvolva o endpoint GET /geo/address
         public async Task<List<GeoDtoHotelResponse>> GetHotelsByGeo(GeoDto geoDto, IHotelRepository repository)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var hotels = repository.GetHotels();
+                var geoResponse = await GetGeoLocation(geoDto);
+                var hotelResponses = new List<GeoDtoHotelResponse>();
+                foreach (var hotel in hotels)
+                {
+                    var hotelGeo = await GetGeoLocation(new GeoDto { Address = hotel.Address, 
+                                                                    City = hotel.CityName, 
+                                                                    State = hotel.State 
+                                                                    });
+                    if (hotelGeo.lat == null || hotelGeo.lon == null || geoResponse.lat == null || geoResponse.lon == null)
+                    {
+                        throw new HttpRequestException();
+                    }
+                    var distance = CalculateDistance(geoResponse.lat, geoResponse.lon, hotelGeo.lat, hotelGeo.lon);
+                    hotelResponses.Add(new GeoDtoHotelResponse { HotelId = hotel.HotelId, Name = hotel.Name, Address = hotel.Address, CityName = hotel.CityName, State = hotel.State, Distance = distance });
+                }
+                return hotelResponses.OrderBy(h => h.Distance).ToList();                
+            }
+            catch (System.Exception)
+            {
+                
+                throw new HttpRequestException();
+            }
         }
 
        
