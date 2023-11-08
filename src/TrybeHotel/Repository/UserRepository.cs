@@ -32,7 +32,6 @@ namespace TrybeHotel.Repository
                 UserType = user.UserType
             };
         }
-
         public UserDto Add(UserDtoInsert user)
         {
             if (_context.Users.Any(u => u.Email == user.Email))
