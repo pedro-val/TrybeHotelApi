@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrybeHotel.Repository;
 
@@ -11,9 +12,11 @@ using TrybeHotel.Repository;
 namespace TrybeHotel.Migrations
 {
     [DbContext(typeof(TrybeHotelContext))]
-    partial class TrybeHotelContextModelSnapshot : ModelSnapshot
+    [Migration("20231023201802_firstMigration")]
+    partial class firstMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,8 +25,6 @@ namespace TrybeHotel.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-<<<<<<< HEAD
-=======
             modelBuilder.Entity("TrybeHotel.Models.Booking", b =>
                 {
                     b.Property<int>("BookingId")
@@ -56,7 +57,6 @@ namespace TrybeHotel.Migrations
                     b.ToTable("Bookings");
                 });
 
->>>>>>> pedro-val-trybe-hotel-B/pedro-val-trybe-hotel-B
             modelBuilder.Entity("TrybeHotel.Models.City", b =>
                 {
                     b.Property<int>("CityId")
@@ -81,17 +81,10 @@ namespace TrybeHotel.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HotelId"));
 
-<<<<<<< HEAD
-                    b.Property<string>("Adress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CityId")
-=======
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CityId")
->>>>>>> pedro-val-trybe-hotel-B/pedro-val-trybe-hotel-B
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -115,11 +108,7 @@ namespace TrybeHotel.Migrations
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
-<<<<<<< HEAD
-                    b.Property<int?>("HotelId")
-=======
                     b.Property<int>("HotelId")
->>>>>>> pedro-val-trybe-hotel-B/pedro-val-trybe-hotel-B
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
@@ -135,8 +124,6 @@ namespace TrybeHotel.Migrations
                     b.ToTable("Rooms");
                 });
 
-<<<<<<< HEAD
-=======
             modelBuilder.Entity("TrybeHotel.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -181,18 +168,13 @@ namespace TrybeHotel.Migrations
                     b.Navigation("User");
                 });
 
->>>>>>> pedro-val-trybe-hotel-B/pedro-val-trybe-hotel-B
             modelBuilder.Entity("TrybeHotel.Models.Hotel", b =>
                 {
                     b.HasOne("TrybeHotel.Models.City", "City")
                         .WithMany("Hotels")
-<<<<<<< HEAD
-                        .HasForeignKey("CityId");
-=======
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
->>>>>>> pedro-val-trybe-hotel-B/pedro-val-trybe-hotel-B
 
                     b.Navigation("City");
                 });
@@ -201,13 +183,9 @@ namespace TrybeHotel.Migrations
                 {
                     b.HasOne("TrybeHotel.Models.Hotel", "Hotel")
                         .WithMany("Rooms")
-<<<<<<< HEAD
-                        .HasForeignKey("HotelId");
-=======
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
->>>>>>> pedro-val-trybe-hotel-B/pedro-val-trybe-hotel-B
 
                     b.Navigation("Hotel");
                 });
@@ -221,8 +199,6 @@ namespace TrybeHotel.Migrations
                 {
                     b.Navigation("Rooms");
                 });
-<<<<<<< HEAD
-=======
 
             modelBuilder.Entity("TrybeHotel.Models.Room", b =>
                 {
@@ -233,7 +209,6 @@ namespace TrybeHotel.Migrations
                 {
                     b.Navigation("Bookings");
                 });
->>>>>>> pedro-val-trybe-hotel-B/pedro-val-trybe-hotel-B
 #pragma warning restore 612, 618
         }
     }
