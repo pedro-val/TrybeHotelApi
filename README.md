@@ -91,9 +91,6 @@ Para utilizar a API TrybeHotel, siga os seguintes passos:
 
 Lembre-se de fornecer os dados de autenticação quando necessário e de seguir as políticas de autorização para acessar rotas seguras.
 
-## Testes
-
-Foram desenvolvidos testes unitários para garantir a qualidade da API. Os testes cobrem no mínimo 40% das linhas de código e estão localizados na pasta apropriada.
 
 
 
