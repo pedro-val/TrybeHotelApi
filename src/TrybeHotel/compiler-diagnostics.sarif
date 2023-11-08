@@ -112,6 +112,27 @@
           }
         },
         {
+          "ruleId": "CS8603",
+          "level": "warning",
+          "message": "Possível retorno de referência nula.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///home/pedro/trybe/Projetos/c%23/csharp-028-csharp-projeto-trybe-hotel-fase-d/src/TrybeHotel/Services/GeoService.cs",
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 24,
+                  "endLine": 54,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
           "ruleId": "CS8602",
           "level": "warning",
           "message": "Desreferência de uma referência possivelmente nula.",
@@ -187,27 +208,6 @@
                   "startColumn": 38,
                   "endLine": 53,
                   "endColumn": 55
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8603",
-          "level": "warning",
-          "message": "Possível retorno de referência nula.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///home/pedro/trybe/Projetos/c%23/csharp-028-csharp-projeto-trybe-hotel-fase-d/src/TrybeHotel/Services/GeoService.cs",
-                "region": {
-                  "startLine": 54,
-                  "startColumn": 24,
-                  "endLine": 54,
-                  "endColumn": 47
                 }
               }
             }
@@ -330,9 +330,9 @@
               "resultFile": {
                 "uri": "file:///home/pedro/trybe/Projetos/c%23/csharp-028-csharp-projeto-trybe-hotel-fase-d/src/TrybeHotel/Program.cs",
                 "region": {
-                  "startLine": 99,
+                  "startLine": 100,
                   "startColumn": 22,
-                  "endLine": 99,
+                  "endLine": 100,
                   "endColumn": 29
                 }
               }
