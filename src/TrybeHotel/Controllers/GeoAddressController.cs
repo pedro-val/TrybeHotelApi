@@ -33,7 +33,7 @@ namespace TrybeHotel.Controllers;
             }
             catch (System.Exception e)
             {
-                return Ok(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
     }

@@ -28,22 +28,24 @@ namespace TrybeHotel.Services
             }
             else
             {
-                throw new HttpRequestException();
+                return default(GeoDtoResponse);
             }
         }
         
         // 12. Desenvolva o endpoint GET /geo/address
         public async Task<GeoDtoResponse> GetGeoLocation(GeoDto geoDto)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"hhttps://nominatim.openstreetmap.org/search?street={geoDto.Address}&city={geoDto.City}&country=Brazil&state={geoDto.State}&format=json&limit=1");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"https://nominatim.openstreetmap.org/search?street={geoDto.Address}&city={geoDto.City}&country=Brazil&state={geoDto.State}&format=json&limit=1");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("User-Agent", "aspnet-user-agent");
             var response = await _client.SendAsync(request);
-            Console.WriteLine(response.IsSuccessStatusCode);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
+                content = content.TrimStart('[').TrimEnd(']');
+                Console.WriteLine(content);
                 var result = System.Text.Json.JsonSerializer.Deserialize<GeoDtoResponse>(content);
+                Console.WriteLine(result);
                 return new GeoDtoResponse {
                     lat = result?.lat,
                     lon = result?.lon
@@ -74,14 +76,20 @@ namespace TrybeHotel.Services
                         throw new HttpRequestException();
                     }
                     var distance = CalculateDistance(geoResponse.lat, geoResponse.lon, hotelGeo.lat, hotelGeo.lon);
-                    hotelResponses.Add(new GeoDtoHotelResponse { HotelId = hotel.HotelId, Name = hotel.Name, Address = hotel.Address, CityName = hotel.CityName, State = hotel.State, Distance = distance });
+                    hotelResponses.Add(new GeoDtoHotelResponse { 
+                        HotelId = hotel.HotelId, 
+                        Name = hotel.Name, 
+                        Address = hotel.Address, 
+                        CityName = hotel.CityName, 
+                        State = hotel.State,
+                        Distance = distance });
                 }
                 return hotelResponses.OrderBy(h => h.Distance).ToList();                
             }
             catch (System.Exception)
             {
                 
-                throw new HttpRequestException();
+                return default(List<GeoDtoHotelResponse>);
             }
         }
 
