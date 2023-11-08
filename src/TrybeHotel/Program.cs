@@ -9,11 +9,18 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> fd/pedro-val-trybehotel-fase-d
 // Add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<TrybeHotelContext>();
+<<<<<<< HEAD
 builder.Services.AddHttpClient();
+=======
+>>>>>>> fd/pedro-val-trybehotel-fase-d
 builder.Services.AddScoped<ITrybeHotelContext, TrybeHotelContext>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
