@@ -5,7 +5,7 @@ using TrybeHotel.Services;
 namespace TrybeHotel.Controllers
 {
     [ApiController]
-    [Route("geo/status")]
+    [Route("geo/status")]   
     public class GeoStatusController : ControllerBase
     {
         private readonly IHttpClientFactory _clientFactory;
