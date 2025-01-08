@@ -1,96 +1,76 @@
-# TrybeHotel API
+### TrybeHotel API
+This is the repository for the TrybeHotel API, an API developed in several stages for managing cities, hotels, rooms, bookings, and integration with geographical information based on addresses. The API was developed in C# with ASP.NET and uses a database to store information about hotels, cities, rooms, users, and bookings.
 
-Este é o repositório da API TrybeHotel, uma API desenvolvida em várias etapas para controle de cidades, hotéis, quartos, reservas e integração com informações geográficas baseadas em endereços. A API foi desenvolvida em C# com ASP.NET e utiliza um banco de dados para armazenar informações sobre hotéis, cidades, quartos, usuários e reservas.
+### Project Stages
+The TrybeHotel project was developed in four distinct stages, each with its own requirements and functionalities. Below, you will find a description of each project stage and the technologies used:
 
-## Etapas do Projeto
+### Phase A: Starting the Development
+In this phase, the goal was to start developing the API and create routes for the entities of cities, hotels, and rooms. Endpoints were developed to list, create, and update information about these entities.
 
-O projeto TrybeHotel foi desenvolvido em quatro etapas distintas, cada uma com seus próprios requisitos e funcionalidades. Abaixo, você encontrará uma descrição de cada etapa do projeto e as tecnologias utilizadas:
+### Technologies Used:
 
-### Fase A: Iniciando o Desenvolvimento
+ASP.NET
+C#
+Database
 
-Nesta fase, o objetivo foi iniciar o desenvolvimento da API e criar rotas para as entidades de cidades, hotéis e quartos. Foram desenvolvidos endpoints para listar, criar e atualizar informações sobre essas entidades.
+### Phase B: Adding Authentication and Security
+In this phase, the API was expanded to include user authentication and authorization policies. Routes for user registration and login were added, as well as authorization policies for secure operations.
 
-**Tecnologias Utilizadas:**
-- ASP.NET
-- C#
-- Banco de dados
+### Technologies Used:
 
-### Fase B: Adicionando Autenticação e Segurança
+ASP.NET
+C#
+JWT Tokens
+Authorization Policies
 
-Nesta fase, a API foi expandida para incluir autenticação de usuários e políticas de autorização. Rotas de cadastro e login de usuários foram adicionadas, bem como políticas de autorização para operações seguras.
+### Phase C: Integration with Geographical Information
+In this phase, the API was enhanced to search for hotels based on geographical address information. Attributes and functionalities were added to improve hotel searches near an address.
 
-**Tecnologias Utilizadas:**
-- ASP.NET
-- C#
-- Tokens JWT
-- Políticas de Autorização
+### Technologies Used:
 
-### Fase C: Integração com Informações Geográficas
+ASP.NET
+C#
+Integration with External Geographical Information API
 
-Nesta fase, a API foi aprimorada para buscar hotéis com base em informações geográficas de endereços. Foram adicionados atributos e funcionalidades para melhorar a pesquisa de hotéis próximos a um endereço.
+### Phase D: Preparing for Deployment
+In the final phase, the API was prepared for deployment. A standard route to check the application’s status was added, and a Dockerfile was created to facilitate the deployment of the API in a production environment.
 
-**Tecnologias Utilizadas:**
-- ASP.NET
-- C#
-- Integração com API externa de informações geográficas
+### Technologies Used:
 
-### Fase D: Preparando para Deploy
+ASP.NET
+C#
+Docker
 
-Na última fase, a API foi preparada para o deploy. Uma rota padrão para verificar o status da aplicação foi adicionada, e um Dockerfile foi criado para facilitar a implantação da API em um ambiente de produção.
+### API Endpoints
+The TrybeHotel API has several endpoints to access different functionalities. Below, we list the main endpoints and their descriptions:
 
-**Tecnologias Utilizadas:**
-- ASP.NET
-- C#
-- Docker
+### Cities
+GET /city: Lists all registered cities.
+POST /city: Creates a new city.
+### Hotels
+GET /hotel: Lists all registered hotels.
+POST /hotel: Creates a new hotel.
+### Rooms
+GET /room/:hotelId: Lists all rooms in a specific hotel.
+POST /room: Creates a new room.
+DELETE /room/:roomId: Deletes a specific room.
+### Users
+POST /user: Creates a new user.
+POST /login: Logs in a user.
+GET /user: Lists all registered users.
+### Bookings
+POST /booking: Creates a new booking.
+GET /booking: Lists all made bookings.
+### Geographical Information
+GET /geo/status: Checks the status of geographical information.
+GET /geo/address: Searches for nearby hotels based on an address.
 
-## Endpoints da API
+### How to Use the API
+To use the TrybeHotel API, follow these steps:
 
-A API TrybeHotel possui vários endpoints para acessar diferentes funcionalidades. Abaixo, listamos os principais endpoints e suas descrições:
-
-### Cidades
-
-- `GET /city`: Lista todas as cidades cadastradas.
-- `POST /city`: Cria uma nova cidade.
-
-### Hotéis
-
-- `GET /hotel`: Lista todos os hotéis cadastrados.
-- `POST /hotel`: Cria um novo hotel.
-
-### Quartos
-
-- `GET /room/:hotelId`: Lista todos os quartos de um hotel específico.
-- `POST /room`: Cria um novo quarto.
-- `DELETE /room/:roomId`: Exclui um quarto específico.
-
-### Usuários
-
-- `POST /user`: Cria um novo usuário.
-- `POST /login`: Realiza o login de um usuário.
-- `GET /user`: Lista todos os usuários cadastrados.
-
-### Reservas
-
-- `POST /booking`: Cria uma nova reserva.
-- `GET /booking`: Lista todas as reservas realizadas.
-
-### Informações Geográficas
-
-- `GET /geo/status`: Verifica o status das informações geográficas.
-- `GET /geo/address`: Busca hotéis próximos com base em um endereço.
-
-## Como Utilizar a API
-
-Para utilizar a API TrybeHotel, siga os seguintes passos:
-
-1. Clone este repositório.
-2. Abra o projeto em sua IDE de desenvolvimento favorita.
-3. Certifique-se de que você possui todas as tecnologias necessárias instaladas.
-4. Execute a API localmente ou faça o deploy em um ambiente de produção, se necessário.
-5. Utilize os endpoints da API conforme necessário, fazendo requisições HTTP a eles.
-
-Lembre-se de fornecer os dados de autenticação quando necessário e de seguir as políticas de autorização para acessar rotas seguras.
-
-
-
-
+Clone this repository.
+Open the project in your favorite development IDE.
+Ensure you have all the necessary technologies installed.
+Run the API locally or deploy it to a production environment if needed.
+Use the API endpoints as needed by making HTTP requests to them.
+Remember to provide authentication data when necessary and follow authorization policies to access secure routes.
